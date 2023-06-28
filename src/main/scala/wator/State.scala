@@ -3,30 +3,33 @@ package wator
 import scalafx.scene.paint.Color
 import scalafx.scene.shape.Circle
 import wator.{Shark, State, Thon}
-import WatorAgentType.Thon
-import WatorAgentType.Shark
+import wator.WatorAgentType
+
 
 case class State(thon: List[Thon], shark: List[Shark]) {
   type Coordinates = (Int,Int)
-  val THON_RADIUS = 2
-  val SHARK_RADIUS = 4
+ 
+  val fishesRadius: Int = 5
+  val fishesDiameter: Int = fishesRadius * 2
 
-  def newThonState(allThon: Map[Coordinates, Thon], allShark: Map[Coordinates, List[Shark]]): List[Thon] = {
-    val Fishes  = allThon.map { case (coordinates, _) => coordinates -> Thon }
+  def newThonState(allThon: Map[Coordinates, Thon], allShark: Map[Coordinates, Shark]): List[Thon] = {
+    val Fishes  = allThon.map { case (coordinates, _) => coordinates -> WatorAgentType.Thon }
     thon.flatMap(_.move(allThon, Fishes))
   }
 
- def newSharkState(allShark: Map[Coordinates,Shark],allthon: Map[Coordinates, List[Thon]]) :List[Shark]= {
-   val Fishes = allShark.map{case (coordinates, _) => coordinates -> Shark}   
-   shark.flatMap(_.move(allShark,Fishes))
- }
+  def newSharkState(allShark: Map[Coordinates, Shark], allThon: Map[Coordinates, Thon]): List[Shark] = {
+    val Fishes = allShark.map { case (coordinates, _) => coordinates -> WatorAgentType.Shark }
+    allShark.values.flatMap(_.move(allShark, Fishes)).toList
+  }
+
+
 
   def drawThon(): List[Circle] =
     thon.map { t =>
       new Circle {
-        centerX = t.x
-        centerY = t.y
-        radius = THON_RADIUS
+        centerX = t.x * fishesDiameter
+        centerY = t.y * fishesDiameter
+        radius = fishesRadius
         fill = t.color
       }
     }
@@ -34,9 +37,9 @@ case class State(thon: List[Thon], shark: List[Shark]) {
   def drawShark(): List[Circle] =
     shark.map { s =>
       new Circle {
-        centerX = s.x
-        centerY = s.y
-        radius = SHARK_RADIUS
+        centerX = s.x * fishesDiameter
+        centerY = s.y * fishesDiameter
+        radius = fishesRadius
         fill = s.color
       }
     }

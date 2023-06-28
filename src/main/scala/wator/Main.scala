@@ -12,15 +12,17 @@ import scala.util.Random
 
 object Main extends JFXApp3 {
 
-  val NUMBER_THON = 1000
-  val NUMBER_SHARK = 1
+  val NUMBER_THON = 1
+  val NUMBER_SHARK = 2
   val THON_COLOR: Color = Brown
   val SHARK_COLOR: Color = Blue
-  val T_BREED = 3
-  val S_BREED = 5
-  val S_ENERGY = 10000
+  val T_BREED = 10
+  val S_BREED = 10
+  val S_ENERGY = 10
   val breedCounter = 1
-  
+  val fishesRadius: Int = 5
+  val fishesDiameter: Int = fishesRadius * 2
+  val boardSize: Int         = 100
   def generateThon(n: Int, width: Int, height: Int): List[Thon] =
     List.fill(n) {
       val x = Random.nextInt(width)
@@ -43,20 +45,22 @@ object Main extends JFXApp3 {
     }
 
   override def start(): Unit = {
-    val state = ObjectProperty(State(generateThon(NUMBER_THON, BOARD_WIDTH, BOARD_HEIGHT), generateShark(NUMBER_SHARK, BOARD_WIDTH, BOARD_HEIGHT)))
+    val state = ObjectProperty(State(generateThon(NUMBER_THON, boardSize , boardSize ), generateShark(NUMBER_SHARK, boardSize , boardSize )))
     val frame = IntegerProperty(0)
 
     frame.onChange {
       val allThon = state.value.thon.map(t => (t.x, t.y) -> t).toMap
-      val allShark = state.value.shark.groupBy(s => (s.x, s.y))
-      state.update(State(state.value.newThonState(allThon, allShark), state.value.newSharkState(allThon, allShark)))
+      val allShark = state.value.shark.map(s => (s.x, s.y)->s).toMap
+      state.update(State(state.value.newThonState(allThon, allShark), state.value.newSharkState(allShark, allThon)))
+      println("shark" +state.value.shark.size)
+      println("thon" +state.value.thon.size)
 
     }
 
     stage = new JFXApp3.PrimaryStage {
       title = "WATOR"
-      width = BOARD_WIDTH
-      height = BOARD_HEIGHT
+      width = boardSize * fishesDiameter
+      height = boardSize * fishesDiameter
       scene = new Scene {
         fill = LightBlue
         content = state.value.drawThon() ++ state.value.drawShark()
