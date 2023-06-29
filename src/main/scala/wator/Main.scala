@@ -12,8 +12,8 @@ import scala.util.Random
 
 object Main extends JFXApp3 {
 
-  val NUMBER_THON = 1
-  val NUMBER_SHARK = 2
+  val NUMBER_THON = 12
+  val NUMBER_SHARK = 25
   val THON_COLOR: Color = Brown
   val SHARK_COLOR: Color = Blue
   val T_BREED = 10
