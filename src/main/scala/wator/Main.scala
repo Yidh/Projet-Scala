@@ -12,35 +12,35 @@ import scala.util.Random
 
 object Main extends JFXApp3 {
 
-  val NUMBER_THON = 12
-  val NUMBER_SHARK = 25
-  val THON_COLOR: Color = Brown
-  val SHARK_COLOR: Color = Blue
-  val T_BREED = 10
-  val S_BREED = 10
-  val S_ENERGY = 10
-  val breedCounter = 1
-  val fishesRadius: Int = 5
+  val NUMBER_THON         = 12
+  val NUMBER_SHARK        = 25
+  val THON_COLOR: Color   = Brown
+  val SHARK_COLOR: Color  = Blue
+  val T_BREED             = 10
+  val S_BREED             = 10
+  val S_ENERGY            = 10
+  val breedCounter        = 1
+  val fishesRadius: Int   = 5
   val fishesDiameter: Int = fishesRadius * 2
-  val boardSize: Int         = 100
+  val boardSize: Int      = 100
   def generateThon(n: Int, width: Int, height: Int): List[Thon] =
     List.fill(n) {
-      val x = Random.nextInt(width)
-      val y = Random.nextInt(height)
-      val color = THON_COLOR
-      val tbreed = T_BREED
+      val x       = Random.nextInt(width)
+      val y       = Random.nextInt(height)
+      val color   = THON_COLOR
+      val tbreed  = T_BREED
       val counter = breedCounter
       Thon(x, y, color, tbreed,counter)
     }
 
   def generateShark(n: Int, width: Int, height: Int): List[Shark] =
     List.fill(n) {
-      val x = Random.nextInt(width)
-      val y = Random.nextInt(height)
-      val color = SHARK_COLOR
-      val sbreed = S_BREED
-      val senergy = S_ENERGY
-      val sbreedcounter = breedCounter
+      val x              = Random.nextInt(width)
+      val y              = Random.nextInt(height)
+      val color          = SHARK_COLOR
+      val sbreed         = S_BREED
+      val senergy        = S_ENERGY
+      val sbreedcounter  = breedCounter
       Shark(x, y, color, sbreed, senergy , sbreedcounter)
     }
 
@@ -58,12 +58,12 @@ object Main extends JFXApp3 {
     }
 
     stage = new JFXApp3.PrimaryStage {
-      title = "WATOR"
-      width = boardSize * fishesDiameter
-      height = boardSize * fishesDiameter
-      scene = new Scene {
-        fill = LightBlue
-        content = state.value.drawThon() ++ state.value.drawShark()
+      title       = "WATOR"
+      width       = boardSize * fishesDiameter
+      height      = boardSize * fishesDiameter
+      scene       = new Scene {
+        fill      = LightBlue
+        content   = state.value.drawThon() ++ state.value.drawShark()
         frame.onChange(Platform.runLater {
           content = state.value.drawThon() ++ state.value.drawShark()
         })

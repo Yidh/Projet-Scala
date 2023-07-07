@@ -12,7 +12,7 @@ case class Shark(x: Int, y: Int, color: Color, sbreed: Int, sbreedcounter: Int, 
   val boardSize: Int = 100
 
   def move(allShark: Map[Coordinates, Shark], Fishes: Map[Coordinates, WatorAgentType]): List[Shark] = {
-    val neighbours: Seq[Coordinates] = Random.shuffle(neighboursOf(x, y, fishesDiameter))
+    val neighbours: Seq[Coordinates]        = Random.shuffle(neighboursOf(x, y, fishesDiameter))
 
     val tunaNeighbours: Option[Coordinates] = neighbours.find { case (nx, ny) => Fishes.get((nx, ny)).contains(WatorAgentType.Thon) }
     val freeNeighbours: Option[Coordinates] = neighbours.find { case (nx, ny) => !Fishes.contains((nx, ny)) }
@@ -66,8 +66,5 @@ case class Shark(x: Int, y: Int, color: Color, sbreed: Int, sbreedcounter: Int, 
         (0 until boardSize).contains(x + i) &&
         (0 until boardSize).contains(y + j)
     } yield (x + i, y + j)
-
-  def decreaseEnergy(): Shark = {
-    copy(senergy = senergy - 1)
-  }
+  
 }

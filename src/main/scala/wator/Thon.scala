@@ -8,9 +8,9 @@ import scala.util.Random
 case class Thon(x: Int, y: Int, color: Color, tbreed: Int, breedCounter: Int) {
   type Coordinates = (Int, Int)
 
-  val fishesRadius: Int = 5
+  val fishesRadius: Int   = 5
   val fishesDiameter: Int = fishesRadius * 2
-  val boardSize: Int = 100
+  val boardSize: Int      = 100
 
   def move(allThon: Map[Coordinates, Thon], Fishes: Map[Coordinates, WatorAgentType]) = {
     val neighbours: Seq[Coordinates] = Random.shuffle(neighboursOf(x, y, fishesDiameter))

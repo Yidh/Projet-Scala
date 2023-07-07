@@ -25,18 +25,18 @@ object Main extends JFXApp3 {
 
   def generatePaticules(n: Int, width: Int, height: Int): List[Particule] =
     List.fill(n) {
-      val x = Random.nextInt(width)
-      val y = Random.nextInt(height)
+      val x                = Random.nextInt(width)
+      val y                = Random.nextInt(height)
       val numberDirections = Direction.values.length
-      val direction = Direction.values(Random.nextInt(numberDirections))
-      val color = Color.rgb(Random.nextInt(256), Random.nextInt(256), Random.nextInt(256), 1)
+      val direction        = Direction.values(Random.nextInt(numberDirections))
+      val color            = Color.rgb(Random.nextInt(256), Random.nextInt(256), Random.nextInt(256), 1)
       Particule(x, y, direction, color)
     }
 
   def gameloop(update: () => Unit): Unit = {
     def tick = Future {
       update();
-      Thread.sleep(100)
+      Thread.sleep(10)
     }
 
     def loopagain = Future(gameloop(update))
@@ -58,12 +58,12 @@ object Main extends JFXApp3 {
     }
 
     stage = new PrimaryStage {
-      title = "Particules"
-      width = BOARD_WIDTH
-      height = BOARD_HEIGHT
-      scene = new Scene {
-        fill = Black
-        content = state.value.drawParticules()
+      title   = "Particules"
+      width   = BOARD_WIDTH
+      height  = BOARD_HEIGHT
+      scene   = new Scene {
+        fill  = Black
+        content   = state.value.drawParticules()
         frame.onChange(Platform.runLater {
           content = state.value.drawParticules()
 
